@@ -1,114 +1,87 @@
 # Machine Learning and Deep Learning Workspace
 
-This repository contains a collection of Jupyter notebooks and scripts for exploring machine learning and deep learning concepts using Python. It covers topics ranging from data preprocessing and feature engineering to training and evaluating machine learning and deep learning models.
+A collection of Jupyter notebooks and small scripts for learning and experimenting with core machine learning and deep learning workflows (NumPy, pandas, scikit-learn, PyTorch, computer vision and small training pipelines). Keep notebooks runnable in VS Code / Jupyter and reusable scripts under `dl/going_modular`.
 
-## Project Structure
+## Quick links
 
-```
-ml/
-    scikitlearn0.ipynb
-    helper_functions.py
-    ml_numpy.ipynb
-    fundamentals_dl0.ipynb
-    fundamentals_dl1.ipynb
-    classification_dl2.ipynb
-    computervision_dl3.ipynb
-data/
-    heart-disease.csv
-    FashionMNIST/
-        raw/
-    car-sales-extended.csv
-    car-sales-extended-missing-data.csv
-models/
-    random_forest_model_1.pkl
-    random_forest_model_1.joblib
-    01_pytorch_fundamentals_model_0.pth
-    01_pytorch_workflow_model_1.pth
-images/
-    numpy-car-photo.png
-    numpy-dog-photo.png
-    numpy-panda.jpeg
-README.md
-```
+- Notebooks
+  - [dl/repl.ipynb](dl/repl.ipynb)
+  - [dl/fundamentals_dl0.ipynb](dl/fundamentals_dl0.ipynb)
+  - [dl/fundamentals_dl1.ipynb](dl/fundamentals_dl1.ipynb)
+  - [dl/classification_dl2.ipynb](dl/classification_dl2.ipynb)
+  - [dl/computervision_dl3.ipynb](dl/computervision_dl3.ipynb)
+  - [dl/datasets_dl4.ipynb](dl/datasets_dl4.ipynb)
+  - [dl/tranferlearning_dl5.ipynb](dl/tranferlearning_dl5.ipynb)
+  - [ml/ml_numpy.ipynb](ml/ml_numpy.ipynb)
+  - [ml/pandas.ipynb](ml/pandas.ipynb)
+  - [ml/scikitlearn0.ipynb](ml/scikitlearn0.ipynb)
 
-## Contents
+- Script-mode (going modular)
+  - Overview: [dl/going_modular/README.md](dl/going_modular/README.md)  
+  - Module scripts: [dl/going_modular/going_modular/README.md](dl/going_modular/going_modular/README.md)  
+  - Key script files:
+    - [dl/going_modular/going_modular/data_setup.py](dl/going_modular/going_modular/data_setup.py) — data helpers and dataloaders
+    - [dl/going_modular/going_modular/engine.py](dl/going_modular/going_modular/engine.py) — training / evaluation loops
+    - [dl/going_modular/going_modular/train.py](dl/going_modular/going_modular/train.py) — example entry-point to run training
 
-### Machine Learning Notebooks
-- **`ml/scikitlearn0.ipynb`**:  
-  Covers Scikit-learn workflows, including:
-  - Data preprocessing (handling missing data, encoding categorical variables).
-  - Training and evaluating models like `RandomForestClassifier` and `RandomForestRegressor`.
-  - Hyperparameter tuning with `GridSearchCV`.
-  - Model persistence using `pickle` and `joblib`.
+- Utility helpers
+  - Root-level helpers: [helper_functions.py](helper_functions.py) — contains helpers like [`helper_functions.download_data`](helper_functions.py), [`helper_functions.set_seeds`](helper_functions.py), [`helper_functions.plot_loss_curves`](helper_functions.py)
+  - DL folder copy: [dl/helper_functions.py](dl/helper_functions.py)
 
-- **`ml_numpy.ipynb`**:  
-  Introduces NumPy basics, including array operations, data manipulation, and image processing.
+- Data and models
+  - Data folders: [dl/data/](dl/data/), [ml/data/](ml/data/)
+  - Saved models: [dl/models/](dl/models/) and [models/](models/)
 
-### Deep Learning Notebooks
-- **`fundamentals_dl0.ipynb`** and **`fundamentals_dl1.ipynb`**:  
-  Introduce PyTorch fundamentals, including tensor operations, building simple neural networks, and training workflows.
+## Structure (high level)
 
-- **`classification_dl2.ipynb`**:  
-  Demonstrates classification tasks using PyTorch, including training and evaluating models.
+- dl/ — deep learning notebooks, small datasets, modular scripts
+  - dl/going_modular/going_modular/ — reusable Python scripts for training (see above)
+  - dl/data/ — datasets used in notebooks (e.g. `pizza_steak_sushi`, `FashionMNIST`)
+  - dl/models/ — exported PyTorch checkpoints
+- ml/ — machine learning notebooks (NumPy, pandas, scikit-learn) and sample data
+- helper_functions.py — general utility functions used by multiple notebooks
+- README.md — this file
 
-- **`computervision_dl3.ipynb`**:  
-  Focuses on computer vision tasks using the FashionMNIST dataset, including data loading, model training, and evaluation.
+## Quick start
 
-### Scripts
-- **`helper_functions.py`**:  
-  Contains reusable utility functions for:
-  - Plotting (e.g., loss curves, predictions).
-  - Accuracy calculations.
-  - Model evaluation.
-  - Data downloading and preprocessing.
+1. Create a Python environment (recommended Python 3.8+).
+2. Install core packages used across notebooks:
+   pip install numpy pandas matplotlib scikit-learn jupyterlab notebook torch torchvision
+3. Open the desired notebook in VS Code or Jupyter and run cells.
 
-### Data
-- **`heart-disease.csv`**: Dataset for classification tasks.
-- **`FashionMNIST/`**: Dataset for computer vision tasks.
-- **`car-sales-extended.csv`** and **`car-sales-extended-missing-data.csv`**: Datasets for regression tasks and handling missing data.
+Notes:
+- Some notebooks/scripts assume PyTorch + torchvision recent versions (see top of `dl/repl.ipynb`) and will attempt to install or validate version requirements at runtime.
+- For the modular training scripts, read [dl/going_modular/README.md](dl/going_modular/README.md) and the module README [dl/going_modular/going_modular/README.md](dl/going_modular/going_modular/README.md) first.
 
-### Models
-- Pretrained and saved models:
-  - `random_forest_model_1.pkl` and `random_forest_model_1.joblib`: RandomForest models trained on car sales data.
-  - `01_pytorch_fundamentals_model_0.pth` and `01_pytorch_workflow_model_1.pth`: PyTorch models trained on various tasks.
+## How to run the modular training example
 
-## Getting Started
+1. Prepare data (see): [`going_modular.data_setup.create_dataloaders`](dl/going_modular/going_modular/data_setup.py)
+2. Use the training engine: [`going_modular.engine.train`](dl/going_modular/going_modular/engine.py) or run the example entrypoint [dl/going_modular/going_modular/train.py](dl/going_modular/going_modular/train.py).
 
-1. **Install Dependencies**  
-   Ensure you have Python 3.8+ installed. Install the required libraries:
-   ```sh
-   pip install numpy pandas matplotlib scikit-learn torch torchvision
-   ```
+Example (from repository root):
+python dl/going_modular/going_modular/train.py
 
-2. **Run Notebooks**  
-   Open the `.ipynb` files in Jupyter Notebook or Visual Studio Code and execute the cells.
+Read the module READMEs first for expected CLI args / environment.
 
-3. **Data Preprocessing**  
-   The notebooks include examples of handling missing data, encoding categorical variables, and splitting datasets into training and testing sets.
+## Data
 
-4. **Model Training and Evaluation**  
-   Train machine learning and deep learning models and evaluate their performance using metrics like accuracy, confusion matrix, and cross-validation scores.
+- Datasets used by notebooks are under:
+  - [dl/data/FashionMNIST/](dl/data/FashionMNIST/)
+  - [dl/data/pizza_steak_sushi/](dl/data/pizza_steak_sushi/)
+  - [ml/data/](ml/data/)
 
-5. **Model Persistence**  
-   Save and load trained models using `pickle` or `joblib`.
+Notebooks often include code to download or prepare data automatically; see [`helper_functions.download_data`](helper_functions.py) and [dl/going_modular/going_modular/data_setup.py](dl/going_modular/going_modular/data_setup.py).
 
-## Key Features
+## Notes
 
-- **Machine Learning**:
-  - Classification: Predicting heart disease using `RandomForestClassifier`.
-  - Regression: Predicting car prices using `RandomForestRegressor`.
-  - Hyperparameter tuning with `GridSearchCV`.
-  - Cross-validation for robust model evaluation.
+- Keep notebooks reproducible by setting seeds via [`helper_functions.set_seeds`](helper_functions.py).
+- If you modify or reuse the modular scripts, prefer the files under `dl/going_modular/going_modular/` (designed to be imported and reused).
 
-- **Deep Learning**:
-  - PyTorch fundamentals: Tensor operations, building and training neural networks.
-  - Classification tasks with PyTorch.
-  - Computer vision workflows using FashionMNIST.
+## Contributing
 
-- **Data Handling**:
-  - Handling missing data with techniques like filling and dropping.
-  - Encoding categorical variables using `OneHotEncoder` and `ColumnTransformer`.
+- Make small, focused changes.
+- Update relevant notebook outputs if you change code behavior.
 
 ## License
 
-This project
+- This workspace is intended for learning and personal use. No license file is included.
